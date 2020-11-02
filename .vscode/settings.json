@@ -1,0 +1,6 @@
+{
+  "prettier.semi": false,
+  "prettier.bracketSpacing": true,
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": true
+}

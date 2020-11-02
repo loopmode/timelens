@@ -1,0 +1,20 @@
+@import url(https://unpkg.com/spectre.css/dist/spectre.min.css);
+@import '~static/fonts/roboto-fontfacekit/stylesheet.css';
+
+* {
+  font-family: Roboto;
+}
+
+/* An additional single font file for the headings */
+@font-face {
+  font-family: Caveat;
+  src: url('~static/fonts/caveat-regular-webfont.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+// prettier-ignore
+h1, h2, h3, h4, h5, h6 {
+  font-family: Caveat;
+}
