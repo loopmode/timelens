@@ -9,9 +9,10 @@
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "native": "electron-builder install-app-deps",
-    "migrate:new": "yarn knex migrate:make",
-    "migrate:update": "yarn knex migrate:latest",
-    "migrate:rollback": "yarn knex migrate:rollback"
+    "migrate:make": "yarn knex migrate:make",
+    "migrate:latest": "yarn knex migrate:latest",
+    "migrate:rollback": "yarn knex migrate:rollback",
+    "nuke:db": "rm -f static/db/default.sqlite3 && yarn migrate:latest"
   },
   "resolutions": {
     "js-yaml": "3.13.1",
@@ -19,8 +20,10 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.0",
+    "@types/lodash": "^4.14.164",
     "active-win": "^6.2.0",
     "knex": "^0.21.12",
+    "lodash": "4.17.13",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.8.3",
@@ -44,6 +47,7 @@
     "electron-webpack": "^2.8.2",
     "electron-webpack-eslint": "^6.0.0",
     "electron-webpack-ts": "^4.0.1",
+    "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.5.0",
     "eslint-loader": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",

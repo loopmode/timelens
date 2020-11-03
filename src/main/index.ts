@@ -4,7 +4,7 @@ import { app, BrowserWindow, Tray, Menu } from 'electron';
 import * as path from 'path';
 import { format as formatUrl } from 'url';
 
-import { startPolling, stopPolling } from './polling';
+import { HistoryLogger } from './history/HistoryLogger';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -12,11 +12,15 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 let mainWindow: BrowserWindow | null;
 let tray: Tray | null = null;
 
-startPolling();
+const logger = new HistoryLogger();
+
+logger.startPolling();
+
 app.on('before-quit', function () {
   tray?.destroy();
-  stopPolling();
+  logger.stopPolling();
 });
+
 function quitApplication() {
   (app as any).isQuiting = true;
   app.quit();
