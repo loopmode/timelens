@@ -1,37 +1,5 @@
 /** CSS Modules supported via :local syntax */
 :local(.App) {
-  &,
-  > .empty {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
-    position: relative;
-  }
-
-  .btn + .btn {
-    margin-left: 5px;
-  }
-
-  .footer {
-    position: absolute;
-    bottom: 0;
-    font-size: 13px;
-    opacity: 0.9;
-    transform: translateX(-50%);
-    left: 50%;
-  }
-
-  img.logo {
-    @keyframes logo-spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    animation: logo-spin infinite 20s linear;
-  }
+  padding: 10px;
+  background: white;
 }
