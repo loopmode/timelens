@@ -1,0 +1,5 @@
+@media screen and (min-width: 1024px) {
+  html body .navbar-item.has-dropdown.is-active .navbar-link {
+    background-color: transparent;
+  }
+}

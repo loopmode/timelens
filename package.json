@@ -21,12 +21,15 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.0",
+    "@loopmode/bind": "^2.0.0",
     "@types/lodash": "^4.14.164",
     "active-win": "^6.2.0",
+    "bulma": "^0.9.1",
     "knex": "^0.21.12",
     "lodash": "4.17.13",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.8.3",
     "source-map-support": "^0.5.12",
     "sqlite3": "^5.0.0"
@@ -39,6 +42,7 @@
     "@types/knex": "^0.16.1",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",
+    "@types/react-helmet": "^6.1.0",
     "@types/sqlite3": "^3.1.6",
     "@typescript-eslint/eslint-plugin": "^2.3.1",
     "@typescript-eslint/parser": "^2.3.1",

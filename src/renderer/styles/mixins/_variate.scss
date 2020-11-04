@@ -1,0 +1,71 @@
+// ------------------------------------------------------------------------
+//
+// @mixin variate($style, $sizes, $variations, $withUnits)
+//
+// creates a list of shortcut utitlity classes, with variations for each side
+//
+// Usage:
+//
+// variate(margin);
+// variate(margin, (0em, 6em, 12em, 24em, 48em));
+// variate(margin, null, ('top', 'bottom'));
+// variate(margin, null, null, true);
+//
+// see https://gist.github.com/loopmode/3649ff80eda32c444467a8389df368d2
+//
+// ------------------------------------------------------------------------
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
+}
+
+$default_sizes: (0px, 5px, 10px, 20px, 40px, 80px, auto);
+$default_variations: ('', 'top', 'left', 'bottom', 'right');
+
+@mixin variate(
+  $style,
+  $sizes: $default_sizes,
+  $variations: $default_variations,
+  $withUnits: false
+) {
+  // allow falsey values to use defaults, for e.g variate(margin, null, null, true)
+  $sizes: if($sizes, $sizes, $default_sizes);
+  $variations: if($variations, $variations, $default_variations);
+
+  @each $size in $sizes {
+    @each $variation in $variations {
+      $styleLetter: str-slice($style, 0, 1);
+      $sideLetter: str-slice($variation, 0, 1);
+      $sizeIndex: index($sizes, $size) - 1;
+
+      $indexClassName: $styleLetter + $sideLetter + '-' + $sizeIndex;
+      $unitClassName: $styleLetter +
+        $sideLetter +
+        '-' +
+        str-replace('#{$size}', '.', '_');
+
+      $className: if(
+        $withUnits,
+        '#{$indexClassName}, .#{$unitClassName}',
+        $indexClassName
+      );
+
+      $className: if(type-of($size) == string, $unitClassName, $className);
+
+      .#{$className} {
+        $styleName: if($variation == '', $style, #{$style}-#{$variation});
+        #{$styleName}: $size;
+      }
+    }
+  }
+}

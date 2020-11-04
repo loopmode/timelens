@@ -1,0 +1,111 @@
+html body {
+  .is-clickable {
+    cursor: pointer;
+  }
+
+  .is-borderless {
+    border: none;
+  }
+
+  .is-transparent {
+    background-color: transparent;
+  }
+
+  .is-unfocusable {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .is-multiline {
+    white-space: pre-wrap;
+  }
+
+  .is-small {
+    font-size: 0.75rem;
+  }
+
+  .is-centered {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .is-italic {
+    font-style: italic;
+  }
+
+  .is-underlined {
+    text-decoration: underline;
+  }
+
+  .is-unselectable {
+    user-select: none;
+  }
+
+  .has-default-cursor {
+    cursor: default;
+  }
+
+  .is-preformatted {
+    white-space: pre;
+  }
+
+  //-------------------------------------------
+  //
+  // POSITION: ABSOLUTE
+  //
+  //-------------------------------------------
+
+  .is-absolute {
+    position: absolute;
+  }
+  .is-absolute-top {
+    position: absolute;
+    top: 0;
+  }
+  .is-absolute-right {
+    position: absolute;
+    right: 0;
+  }
+  .is-absolute-bottom {
+    position: absolute;
+    bottom: 0;
+  }
+  .is-absolute-left {
+    position: absolute;
+    left: 0;
+  }
+
+  //-------------------------------------------
+  //
+  // POSITION: RELATIVE
+  //
+  //-------------------------------------------
+
+  .is-relative {
+    position: relative;
+  }
+  .is-relative-top {
+    position: relative;
+    top: 0;
+  }
+  .is-relative-right {
+    position: relative;
+    right: 0;
+  }
+  .is-relative-bottom {
+    position: relative;
+    bottom: 0;
+  }
+  .is-relative-left {
+    position: relative;
+    left: 0;
+  }
+
+  .is-fullwidth-percent {
+    width: 100%;
+  }
+  .delete.is-danger {
+    background-color: #ff3860;
+  }
+}

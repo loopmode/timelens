@@ -1,0 +1,35 @@
+html body {
+  .is-flex {
+    display: flex;
+  }
+  .is-flex-1 {
+    flex: 1;
+  }
+  .is-flex-0 {
+    flex: 0;
+  }
+  .is-flex-vc {
+    align-items: center;
+  }
+  .is-flex-vb {
+    align-items: baseline;
+  }
+  .is-flex-column {
+    flex-direction: column;
+  }
+  .is-justify-start {
+    justify-content: flex-start;
+  }
+  .is-justify-end {
+    justify-content: flex-end;
+  }
+  .is-justify-self-start {
+    justify-self: flex-start;
+  }
+  .is-justify-self-end {
+    justify-self: flex-end;
+  }
+  .is-align-self-center {
+    align-self: center;
+  }
+}

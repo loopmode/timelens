@@ -1,0 +1,55 @@
+.theme-superhero input,
+.theme-superhero textarea {
+  background: #1a2531;
+  border-color: #2b3d4e;
+  color: white;
+}
+
+.theme-superhero input::placeholder,
+.theme-superhero textarea::placeholder {
+  color: #2b3e50;
+}
+
+.theme-superhero select {
+  background-color: #1a2531;
+  border-color: #2b3d4e;
+  color: white;
+}
+
+.theme-superhero .file-cta {
+  background-color: #1a2531;
+  border-color: #2b3d4e;
+  color: white;
+}
+
+.theme-superhero .file-cta:hover {
+  border-color: #2b3d4e;
+}
+.theme-superhero .file-label:hover .file-cta {
+  background-color: #485563;
+  border-color: #8694a4;
+  color: #dee5ed;
+}
+.theme-superhero .file-label:hover .file-cta:hover {
+  background-color: #2b3e50;
+  border-color: #8694a4;
+  color: #bdcbdb;
+}
+.theme-superhero .file-label:hover .input {
+  border-color: #8694a4;
+}
+
+.theme-superhero .list {
+  background-color: transparent;
+}
+
+.theme-superhero .list-item,
+.theme-superhero .panel-block {
+  background-color: #2b3e5069;
+}
+.theme-superhero .panel-block .list-item {
+  background-color: transparent;
+}
+.theme-superhero .list-item.is-active {
+  background-color: #df691a;
+}

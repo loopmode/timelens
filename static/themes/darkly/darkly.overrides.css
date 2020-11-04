@@ -1,0 +1,35 @@
+.theme-darkly .select:not(.is-multiple) {
+  height: 2.5em;
+}
+
+.theme-darkly input,
+.theme-darkly textarea {
+  background: #5e6d6f;
+  border-color: #738386;
+  color: white;
+}
+
+.theme-darkly input::placeholder,
+.theme-darkly textarea::placeholder {
+  color: lighten(#1f2424, 10%);
+}
+
+.theme-darkly select {
+  background-color: #282f2f;
+  border-color: #4c5759;
+  color: white;
+}
+
+.theme-darkly .file-cta {
+  background-color: #282f2f;
+  border-color: #4c5759;
+  color: white;
+}
+
+.theme-darkly .file-cta:hover {
+  border-color: #8c9b9d;
+}
+
+.theme-darkly .list {
+  background: #282f2f;
+}
