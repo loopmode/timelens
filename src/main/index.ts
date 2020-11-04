@@ -31,10 +31,14 @@ async function createMainWindow() {
     webPreferences: { nodeIntegration: true },
     icon: path.join(__static, 'app.ico'),
   });
-  tray = createTray();
 
-  win.on('closed', () => {
-    mainWindow = null;
+  win.on('close', function (event) {
+    if (!(app as any).isQuiting) {
+      event.preventDefault();
+      mainWindow?.hide();
+    }
+
+    return false;
   });
 
   win.webContents.on('devtools-opened', () => {
@@ -82,6 +86,7 @@ app.on('activate', async () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', async () => {
   mainWindow = await createMainWindow();
+  tray = createTray();
 });
 
 function createTray() {
