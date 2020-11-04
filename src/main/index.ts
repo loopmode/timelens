@@ -115,7 +115,7 @@ function createTray() {
     {
       label: 'Show',
       click: function () {
-        mainWindow?.show();
+        showApplication();
       },
     },
     {
