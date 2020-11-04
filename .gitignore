@@ -5,3 +5,4 @@ thumbs.db
 .idea/
 .local/*
 !.local/.gitkeep 
+!.local/icon.psd
