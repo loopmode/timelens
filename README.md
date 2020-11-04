@@ -10,6 +10,8 @@ Electron app boilerplate for typescript react projects.
 - Font aliases to static folder are in place, check `src/index.scss` for usage
 - Check README in `static/fonts` for instructions on how to embed additional fonts
 
+https://medium.com/swlh/how-to-run-background-worker-processes-in-an-electron-app-e0dc310a93cc
+
 ---
 
 ## electron-webpack-quick-start
