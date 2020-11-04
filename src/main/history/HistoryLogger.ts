@@ -2,14 +2,17 @@
 import activeWin from 'active-win';
 import { HistoryDB } from './HistoryDB';
 import { HistoryUtils } from './HistoryUtils';
-
+/**
+ * Checks for the active window periodically and creates a DB entry
+ * when either the title or the id of the active window has changed.
+ */
 export class HistoryLogger {
   intervalDuration: number;
   intervalId?: NodeJS.Timeout;
 
-  lastSavedWinmdowId?: number;
-  lastSavedWindowTitle?: string;
-  lastSavedTime?: number;
+  lastWindowId?: number;
+  lastWindowTitle?: string;
+  lastTime?: number;
 
   constructor(intervalDuration = 1000) {
     this.intervalDuration = intervalDuration;
@@ -35,8 +38,7 @@ export class HistoryLogger {
     }
 
     const isSameWindow =
-      this.lastSavedWinmdowId === info.id &&
-      this.lastSavedWindowTitle === info.title;
+      this.lastWindowId === info.id && this.lastWindowTitle === info.title;
 
     if (isSameWindow) {
       return;
@@ -44,13 +46,17 @@ export class HistoryLogger {
 
     try {
       const now = Date.now();
-      const duration = now - (this.lastSavedTime || 0);
-      const entry = HistoryUtils.createEntry(info, duration);
-      await HistoryDB.insert(entry);
 
-      this.lastSavedTime = now;
-      this.lastSavedWinmdowId = info.id;
-      this.lastSavedWindowTitle = info.title;
+      if (this.lastTime) {
+        const duration = now - (this.lastTime || 0);
+        const entry = HistoryUtils.createEntry(info, duration);
+        await HistoryDB.insert(entry);
+        console.log('[HistoryLogger]', entry);
+      }
+
+      this.lastTime = now;
+      this.lastWindowId = info.id;
+      this.lastWindowTitle = info.title;
     } catch (error) {
       console.error(error);
     }

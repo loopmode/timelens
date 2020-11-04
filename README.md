@@ -2,6 +2,13 @@
 
 Electron app boilerplate for typescript react projects.
 
+## Installation
+
+```
+yarn setup
+yarn start
+```
+
 ## Notes
 
 - App icon for production build (installer, OS links) is `build/icon.ico` (electron-builder convention)

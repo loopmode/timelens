@@ -1,7 +1,9 @@
 import knex from 'knex';
 const config = require('../../../knexfile');
 
-const db = knex(config.development);
+const db = knex(
+  process.env.NODE_ENV === 'production' ? config.production : config.development
+);
 
 /** this is the format we save to the DB */
 export type HistoryEntry = {
