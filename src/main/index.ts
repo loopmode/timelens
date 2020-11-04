@@ -3,27 +3,33 @@
 import { app, BrowserWindow, Tray, Menu } from 'electron';
 import * as path from 'path';
 import { format as formatUrl } from 'url';
+import { HistoryLoggerIPC } from './history/HistoryIPC';
 
 import { HistoryLogger } from './history/HistoryLogger';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
-let mainWindow: BrowserWindow | null;
+let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
-
-const logger = new HistoryLogger();
-
-logger.startPolling();
-
-app.on('before-quit', function () {
-  tray?.destroy();
-  logger.stopPolling();
-});
+let loggerIPC: HistoryLoggerIPC | null = null;
+let logger: HistoryLogger | null = null;
 
 function quitApplication() {
   (app as any).isQuiting = true;
   app.quit();
+}
+
+async function showApplication() {
+  try {
+    if (mainWindow === null) {
+      mainWindow = await createMainWindow();
+    }
+    mainWindow.show();
+    setupPolling(mainWindow);
+  } catch (error) {
+    console.error('showApplication failed', error);
+  }
 }
 
 async function createMainWindow() {
@@ -36,9 +42,10 @@ async function createMainWindow() {
     if (!(app as any).isQuiting) {
       event.preventDefault();
       mainWindow?.hide();
+      return false;
     }
 
-    return false;
+    return true;
   });
 
   win.webContents.on('devtools-opened', () => {
@@ -78,16 +85,29 @@ app.on('window-all-closed', () => {
 
 app.on('activate', async () => {
   // on macOS it is common to re-create a window even after all windows have been closed
-  if (mainWindow === null) {
-    mainWindow = await createMainWindow();
-  }
+  await showApplication();
 });
 
 // create main BrowserWindow when electron is ready
 app.on('ready', async () => {
-  mainWindow = await createMainWindow();
+  await showApplication();
   tray = createTray();
 });
+
+app.on('before-quit', function () {
+  tray?.destroy();
+  logger?.stopPolling();
+  loggerIPC?.destroy();
+});
+
+function setupPolling(win: BrowserWindow) {
+  logger?.stopPolling();
+  loggerIPC?.destroy();
+
+  logger = new HistoryLogger();
+  loggerIPC = new HistoryLoggerIPC(logger, win);
+  logger.startPolling();
+}
 
 function createTray() {
   const appIcon = new Tray(path.join(__static, 'app.ico'));

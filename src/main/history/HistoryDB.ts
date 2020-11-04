@@ -27,7 +27,7 @@ export const HistoryDB = {
   insert(entry: HistoryEntry) {
     return db('history')
       .insert(entry)
-      .then((ids) => ({ id: ids[0] }));
+      .then((ids) => ({ ...entry, id: ids[0] }));
   },
 
   remove(id: string | number) {

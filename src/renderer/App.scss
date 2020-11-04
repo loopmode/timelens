@@ -1,5 +1,10 @@
 /** CSS Modules supported via :local syntax */
 :local(.App) {
   padding: 10px;
-  background: white;
+  td.short {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

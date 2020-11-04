@@ -1,4 +1,5 @@
 // import path from 'path';
+import { EventEmitter } from 'events';
 import activeWin from 'active-win';
 import { HistoryDB } from './HistoryDB';
 import { HistoryUtils } from './HistoryUtils';
@@ -6,7 +7,7 @@ import { HistoryUtils } from './HistoryUtils';
  * Checks for the active window periodically and creates a DB entry
  * when either the title or the id of the active window has changed.
  */
-export class HistoryLogger {
+export class HistoryLogger extends EventEmitter {
   intervalDuration: number;
   intervalId?: NodeJS.Timeout;
 
@@ -15,6 +16,7 @@ export class HistoryLogger {
   lastTime?: number;
 
   constructor(intervalDuration = 1000) {
+    super();
     this.intervalDuration = intervalDuration;
   }
 
@@ -49,9 +51,9 @@ export class HistoryLogger {
 
       if (this.lastTime) {
         const duration = now - (this.lastTime || 0);
-        const entry = HistoryUtils.createEntry(info, duration);
-        await HistoryDB.insert(entry);
-        console.log('[HistoryLogger]', entry);
+        const data = HistoryUtils.createEntry(info, duration);
+        const entry = await HistoryDB.insert(data);
+        this.emit('saved', entry);
       }
 
       this.lastTime = now;
