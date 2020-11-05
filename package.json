@@ -3,6 +3,8 @@
   "name": "timelens",
   "version": "0.0.0",
   "license": "MIT",
+  "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
+  "description": "An electron app for tracking the time spent working on projects",
   "scripts": {
     "setup": "yarn install && yarn native && yarn migrate:latest",
     "start": "electron-webpack dev",
