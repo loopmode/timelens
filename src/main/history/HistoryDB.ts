@@ -1,10 +1,22 @@
+import path from 'path';
 import knex from 'knex';
-const config = require('../../../knexfile');
 
-const db = knex(
-  process.env.NODE_ENV === 'production' ? config.production : config.development
-);
+const dbConfig = {
+  client: 'sqlite3',
+  useNullAsDefault: true,
+  connection: {
+    filename: path.resolve(__static, 'db/default.sqlite3'),
+  },
+};
 
+if (process.env.NODE_ENV !== 'production') {
+  dbConfig.connection.filename = path.resolve(
+    __static,
+    '../.local/default.sqlite3'
+  );
+}
+
+const db = knex(dbConfig);
 const query = () => db('history');
 
 export const HistoryDB = {
