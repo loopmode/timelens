@@ -13,7 +13,7 @@
     "migrate:make": "yarn knex migrate:make",
     "migrate:latest": "yarn knex migrate:latest",
     "migrate:rollback": "yarn knex migrate:rollback",
-    "nuke:db": "rm -f static/db/default.sqlite3 && yarn migrate:latest"
+    "nuke:db": "rm -f .local/default.sqlite3 && yarn migrate:latest"
   },
   "resolutions": {
     "js-yaml": "3.13.1",

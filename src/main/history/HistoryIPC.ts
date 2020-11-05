@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
 import { HistoryLogger } from './HistoryLogger';
-import { HistoryDB, HistoryEntry } from './HistoryDB';
+import { HistoryDB } from './HistoryDB';
 import bind from '@loopmode/bind';
 
 export class HistoryLoggerIPC {

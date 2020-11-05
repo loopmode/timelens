@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import activeWin from 'active-win';
 import { HistoryDB } from './HistoryDB';
 import { HistoryUtils } from './HistoryUtils';
+
 /**
  * Checks for the active window periodically and creates a DB entry
  * when either the title or the id of the active window has changed.
@@ -11,9 +12,9 @@ export class HistoryLogger extends EventEmitter {
   intervalDuration: number;
   intervalId?: NodeJS.Timeout;
 
-  lastWindowId?: number;
-  lastWindowTitle?: string;
-  lastTime?: number;
+  startedActivity?: Activity;
+  /** time in ms when the current activity was started */
+  startedTime?: number;
 
   constructor(intervalDuration = 1000) {
     super();
@@ -34,33 +35,39 @@ export class HistoryLogger extends EventEmitter {
   }
 
   private async handleTick() {
-    const info = await activeWin();
-    if (!info) {
+    const newActivity: Activity | undefined = await activeWin();
+    if (!newActivity) {
       return;
     }
 
-    const isSameWindow =
-      this.lastWindowId === info.id && this.lastWindowTitle === info.title;
+    const isSameActivity =
+      (this.startedActivity &&
+        this.startedActivity.id === newActivity.id &&
+        this.startedActivity.title === newActivity.title) ||
+      false;
 
-    if (isSameWindow) {
+    if (isSameActivity) {
       return;
     }
+
+    const now = Date.now();
 
     try {
-      const now = Date.now();
-
-      if (this.lastTime) {
-        const duration = now - (this.lastTime || 0);
-        const data = HistoryUtils.createEntry(info, duration);
-        const entry = await HistoryDB.insert(data);
-        this.emit('saved', entry);
+      if (this.startedActivity && this.startedTime) {
+        const duration = now - (this.startedTime || 0);
+        const entry = HistoryUtils.createEntry(
+          this.startedActivity,
+          this.startedTime,
+          duration
+        );
+        const result = await HistoryDB.insert(entry);
+        this.emit('saved', result);
       }
-
-      this.lastTime = now;
-      this.lastWindowId = info.id;
-      this.lastWindowTitle = info.title;
     } catch (error) {
       console.error(error);
     }
+
+    this.startedTime = now;
+    this.startedActivity = newActivity;
   }
 }

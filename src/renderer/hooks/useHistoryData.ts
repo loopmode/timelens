@@ -1,13 +1,8 @@
 import React from 'react';
 import { ipcRenderer } from 'electron';
 
-function scrollToBottom() {
-  const y = document.body.scrollHeight || document.documentElement.scrollHeight;
-  window.scrollTo(0, y);
-}
-
 export function useHistoryData(autoload = true) {
-  const [data, setData] = React.useState<any[]>([]);
+  const [data, setData] = React.useState<HistoryEntry[]>([]);
 
   const load = React.useCallback(() => {
     ipcRenderer.send('history-data-request');
@@ -15,11 +10,10 @@ export function useHistoryData(autoload = true) {
 
   React.useEffect(() => {
     const onInitialData = (e: any, data: any) => {
-      setData(data);
+      setData(data.reverse());
     };
     const onUpdate = (e: any, entry: any) => {
-      setData((current) => [...current, entry]);
-      scrollToBottom();
+      setData((current) => [entry, ...current]);
     };
 
     ipcRenderer.on('history-data', onInitialData);

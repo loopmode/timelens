@@ -19,6 +19,7 @@ function App() {
             <th>program</th>
             <th>path</th>
             <th>duration</th>
+            <th>time</th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@ function App() {
                 <td>{entry.owner_name}</td>
                 <td className="short">{entry.owner_path}</td>
                 <td>{entry.duration / 1000}s</td>
+                <td>{entry.timestamp}</td>
               </tr>
             );
           })}

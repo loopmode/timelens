@@ -17,13 +17,13 @@ module.exports = {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: path.join(__static, 'db/default.sqlite3'),
+      filename: path.join('./static/db/default.sqlite3'),
     },
     migrations: {
-      directory: path.join(__static, 'db/migrations'),
+      directory: path.join('./static/db/migrations'),
     },
     seeds: {
-      directory: path.join(__static, 'db/seeds'),
+      directory: path.join('./static/db/seeds'),
     },
   },
 };

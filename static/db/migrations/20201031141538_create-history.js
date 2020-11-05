@@ -15,7 +15,9 @@ exports.up = function (knex) {
     tbl.integer('memory_usage').notNullable();
     //
     // and some custom fields
-    tbl.integer('duration');
+    tbl.integer('duration').notNullable();
+    tbl.integer('time').notNullable();
+    tbl.timestamp('timestamp').notNullable().defaultTo(knex.fn.now());
   });
 };
 

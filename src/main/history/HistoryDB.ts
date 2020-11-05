@@ -5,32 +5,20 @@ const db = knex(
   process.env.NODE_ENV === 'production' ? config.production : config.development
 );
 
-/** this is the format we save to the DB */
-export type HistoryEntry = {
-  platform: string;
-  title: string;
-  window_id: number;
-  owner_name: string;
-  owner_process_id: number;
-  owner_bundle_id: number | null;
-  owner_path: string;
-  url: string | null;
-  memory_usage: number;
-  duration: number;
-};
+const query = () => db('history');
 
 export const HistoryDB = {
   find() {
-    return db('history');
+    return query();
   },
 
-  insert(entry: HistoryEntry) {
-    return db('history')
-      .insert(entry)
-      .then((ids) => ({ ...entry, id: ids[0] }));
+  async insert(entry: Partial<HistoryEntry>): Promise<HistoryEntry> {
+    const ids = await query().insert(entry);
+    const [result] = await query().select().where('id', ids[0]);
+    return result;
   },
 
   remove(id: string | number) {
-    return db('history').where('id', Number(id)).del();
+    return query().where('id', Number(id)).del();
   },
 };

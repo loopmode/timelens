@@ -1,5 +1,4 @@
-import { LinuxResult, MacOSResult, WindowsResult } from 'active-win';
-import { HistoryEntry } from './HistoryDB';
+import { MacOSResult } from 'active-win';
 
 /**
  * Converts a result from the active-win library to the format we save to the db
@@ -7,9 +6,10 @@ import { HistoryEntry } from './HistoryDB';
  * @param duration
  */
 export function createEntry(
-  activeWinResult: MacOSResult | LinuxResult | WindowsResult,
+  activeWinResult: Activity,
+  time: number,
   duration: number
-): HistoryEntry {
+): Partial<HistoryEntry> {
   return {
     platform: activeWinResult.platform,
     title: activeWinResult.title,
@@ -20,6 +20,7 @@ export function createEntry(
     owner_path: activeWinResult.owner.path,
     url: (activeWinResult as MacOSResult).url || null,
     memory_usage: activeWinResult.memoryUsage,
+    time: time,
     duration: duration,
   };
 }
