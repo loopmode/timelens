@@ -35,7 +35,7 @@ async function showApplication() {
 async function createMainWindow() {
   const win = new BrowserWindow({
     webPreferences: { nodeIntegration: true },
-    icon: path.join(__static, 'app.ico'),
+    icon: path.join(__static, 'icon.ico'),
   });
 
   win.on('close', function (event) {
@@ -110,7 +110,7 @@ function setupPolling(win: BrowserWindow) {
 }
 
 function createTray() {
-  const appIcon = new Tray(path.join(__static, 'app.ico'));
+  const appIcon = new Tray(path.join(__static, 'icon.ico'));
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Show',
